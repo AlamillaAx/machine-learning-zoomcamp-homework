@@ -153,11 +153,14 @@ $RECYCLE.BIN/
 # Linux
 .directory
 
+# Personal notes
+
 
 # ============================================================
 # Optional local data
 # Uncomment these if datasets should NOT be uploaded to Git
 # ============================================================
+*Notes*.ipynb
 
 # data/
 # datasets/
