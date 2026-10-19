@@ -1,0 +1,39 @@
+import requests
+import pandas as pd
+bearer = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5UTTVSakU0TlRZNU5ETkZNa1ZDUWtaQk5ETkdRakl6TWprM056ZzBRamc0TWpGRFJEQXhRUSJ9.eyJodHRwczovL3ZlcnVzZW4uY29tL29yZ2FuaXphdGlvbl9pZCI6WyI4MiJdLCJodHRwczovL3ZlcnVzZW4uY29tL3Blcm1pc3Npb25zIjpbInJlcG9ydGluZ19idXNpbmVzc19pbnRlbGxpZ2VuY2VfZXhwb3J0IiwiZW5yaWNobWVudF92aWV3IiwiZW5yaWNobWVudF92ZXJpZnkiLCJpbnZlbnRvcnlfbWF0Y2hpbmdfdmlldyIsImludmVudG9yeV9tYXRjaGluZ192ZXJpZnkiLCJpbnZlbnRvcnlfbWF0Y2hpbmdfY3JlYXRlIiwibWF0ZXJpYWxfdmlldyIsIm1hdGVyaWFsX3NlYXJjaCIsInJlY29tbWVuZGF0aW9uX3ZpZXciLCJyZWNvbW1lbmRhdGlvbl92ZXJpZnkiLCJyZWNvbW1lbmRhdGlvbl9leGVjdXRpb25fbW9kaWZ5IiwiZHVwbGljYXRlX3ZpZXciLCJkdXBsaWNhdGVfdmVyaWZ5IiwiZWRpdF9jb2xsYWJvcmF0aW9uIiwidmlld19jb2xsYWJvcmF0aW9uIiwicmVjb21tZW5kYXRpb25fbWF0ZXJpYWxfcmV2aWV3X3ZpZXciLCJyZWNvbW1lbmRhdGlvbl9pbnZlbnRvcnlfb3B0aW1pemF0aW9uX3ZpZXciLCJyZWNvbW1lbmRhdGlvbl9yaXNrX3JlZHVjdGlvbl92aWV3IiwicmVjb21tZW5kYXRpb25fbWF0ZXJpYWxfcmV2aWV3X3ZlcmlmeSIsInJlY29tbWVuZGF0aW9uX2ludmVudG9yeV9vcHRpbWl6YXRpb25fdmVyaWZ5IiwicmVjb21tZW5kYXRpb25fcmlza19yZWR1Y3Rpb25fdmVyaWZ5IiwiY3JpdGljYWxpdHlfdmlldyIsImNyaXRpY2FsaXR5X3ZlcmlmeSIsInJlY29tbWVuZGF0aW9uX25ldHdvcmtfdmlldyIsInJlY29tbWVuZGF0aW9uX25ldHdvcmtfdmVyaWZ5IiwicmVwb3J0aW5nX2J1c2luZXNzX2ludGVsbGlnZW5jZV92aWV3Il0sImVtYWlsIjoiYXhlbF9hbGFtaWxsYUBpdGNvbnNvbC5jb20iLCJpc3MiOiJodHRwczovL3ZlcnVzZW4uYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDY5ZTdhMTcyNmIxMjI5MTBkNTdkOWQ1MCIsImF1ZCI6WyJodHRwczovL2FwcC52ZXJ1c2VuLmNvbS9hcHkiLCJodHRwczovL3ZlcnVzZW4uYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTc5MTkyMDg5MiwiZXhwIjoxNzkyMDA3MjkyLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIHJlYWQ6YXB5IiwiZ3R5IjoicGFzc3dvcmQiLCJhenAiOiJ0cVRPYjRjQVRXQldJZzVyU2s1dzNFTkt5SHl6eHgzZiJ9.aBuWD2QVLvi4lXX4SviOyJy6nXqGqCayldCGSrr-DS1uQ6N0t4FqsY6pd0l3EtpLv1VIJO9rc4mszEsSb4IDhhBSRYadI2lbnDixEsvZ8gC2DLEJrGAz83XbZCCJ34cfvdkr1ZPC72SAHVXLO5vtPNg94R_HEG_RiQ63FTygxN_qV_hPEef_CIULp7grAtoaZ6M-V-wvt-e2mZFdkx9la2EobHf4Jd20Q6384M84zs0X8yi9YlFZmfKEtGayl6OQbPx0XgVh-aDv0SadJK8MpeRSjJK-cj1gHnn31PajFAr9D2RojPg6d_thiSLlONvJ1pK_M65tuGJ0pBMqrHT9Ug"
+url = "https://gql.verusen.com/egress/recommendations"
+
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {bearer}"
+}
+
+params = {
+    "plant_id": 1761,
+    "limit": 100
+}
+
+has_more = True
+
+response = requests.get(url, headers=headers, params=params)
+json_data = response.json()
+recommendations = json_data["recommendations"]
+response.raise_for_status()
+
+df = pd.DataFrame(recommendations)
+df.to_excel("Recommendations.xlsx", index=False)
+print(df.head())
+"""
+while has_more:
+    response = requests.get(url, headers=headers)
+    json_data = response.json()
+    response.raise_for_status()
+
+    
+
+
+print(response.json())
+"""
+
+
